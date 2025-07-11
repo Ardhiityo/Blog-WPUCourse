@@ -16,10 +16,10 @@ class UserSeeder extends Seeder
         User::factory(3)->create();
 
         User::factory()->create([
-            'email' => 'arya@test',
+            'email' => 'aryaadi229@gmail.com',
             'username' => 'arya',
             'name' => 'Arya',
-            'password' => 'arya123'
+            'password' => '11111111'
         ]);
     }
 }
