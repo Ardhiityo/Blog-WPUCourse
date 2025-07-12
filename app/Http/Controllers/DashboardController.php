@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -20,10 +21,11 @@ class DashboardController extends Controller
             ->when($keyword, function ($query) use ($keyword) {
                 $query->where('title', 'like', "%{$keyword}%");
             })
+            ->select('id', 'title', 'slug', 'category_id', 'user_id', 'body', 'created_at')
             ->paginate(8)
             ->withQueryString();
 
-        return view('dashboard', compact('posts'));
+        return view('pages.dashboard.index', compact('posts'));
     }
 
     /**
@@ -45,9 +47,9 @@ class DashboardController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        //
+        return view('pages.dashboard.show', compact('post'));
     }
 
     /**

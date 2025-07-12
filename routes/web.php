@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
@@ -20,7 +21,8 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('dashboard', DashboardController::class);
+    Route::resource('dashboard', DashboardController::class)->except('show');
+    Route::get('/dashboard/posts/{post}', [DashboardController::class, 'show'])->name('dashboard.show');
 });
 
 Route::middleware('auth')->group(function () {

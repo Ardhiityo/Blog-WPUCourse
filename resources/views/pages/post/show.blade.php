@@ -34,5 +34,4 @@
             </article>
         </div>
     </main>
-
 </x-layouts.app>
