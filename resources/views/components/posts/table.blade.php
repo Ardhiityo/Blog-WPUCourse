@@ -5,7 +5,7 @@
         <div class="bg-white dark:bg-gray-800 relative border sm:rounded-lg overflow-hidden">
             <div class="flex flex-col md:flex-row items-center space-y-3 md:space-y-0 md:space-x-4 p-4">
                 <div class="w-full md:w-1/2">
-                    <form class="flex items-center">
+                    <form class="flex items-center" action="{{ route('dashboard.index') }}" method="get">
                         <label for="simple-search" class="sr-only">Search</label>
                         <div class="relative w-full">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -18,7 +18,7 @@
                             </div>
                             <input type="text" id="simple-search"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="Search" required="">
+                                placeholder="Search" name="keyword">
                         </div>
                     </form>
                 </div>
@@ -120,10 +120,9 @@
                     </tbody>
                 </table>
             </div>
-            <nav class="flex flex-col md:flex-row justify-end items-start md:items-center space-y-3 md:space-y-0 p-4"
-                aria-label="Table navigation">
+            <div class="p-2">
                 {{ $posts->links() }}
-            </nav>
+            </div>
         </div>
     </div>
 </section>

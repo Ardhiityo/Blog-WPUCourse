@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with(['user:id,name', 'category:id,name'])->paginate(8);
+        $keyword = $request->query('keyword');
+
+        $posts = Post::with(['user:id,name', 'category:id,name'])
+            ->where('user_id', Auth::user()->id)
+            ->when($keyword, function ($query) use ($keyword) {
+                $query->where('title', 'like', "%{$keyword}%");
+            })
+            ->paginate(8)
+            ->withQueryString();
 
         return view('dashboard', compact('posts'));
     }
