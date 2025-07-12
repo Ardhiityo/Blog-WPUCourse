@@ -6,7 +6,6 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -88,8 +87,10 @@ class DashboardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect()->route('dashboard.index')->with('success', 'Post has been deleted');
     }
 }

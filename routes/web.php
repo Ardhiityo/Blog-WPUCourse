@@ -21,8 +21,9 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('dashboard', DashboardController::class)->except('show');
+    Route::resource('dashboard', DashboardController::class)->except(['show', 'delete']);
     Route::get('/dashboard/posts/{post}', [DashboardController::class, 'show'])->name('dashboard.show');
+    Route::delete('/dashboard/posts/{post}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
 });
 
 Route::middleware('auth')->group(function () {
