@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,8 @@ class DashboardController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('pages.dashboard.create', compact('categories'));
     }
 
     /**
