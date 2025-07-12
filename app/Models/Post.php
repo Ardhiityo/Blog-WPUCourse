@@ -10,8 +10,12 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        'created_at' => 'date'
+    protected $fillable = [
+        'title',
+        'slug',
+        'category_id',
+        'user_id',
+        'body'
     ];
 
     public function user()

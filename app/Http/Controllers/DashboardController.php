@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +44,21 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:25|min:3',
+            'category_id' => 'required|exists:categories,id',
+            'body' => 'required|string|min:3',
+        ]);
+
+        Post::create([
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'category_id' => $request->category_id,
+            'user_id' => Auth::user()->id,
+            'body' => $request->body,
+        ]);
+
+        return redirect()->route('dashboard.index')->with('success', 'Post has been created');
     }
 
     /**

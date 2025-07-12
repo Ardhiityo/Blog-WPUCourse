@@ -25,8 +25,16 @@
                                         <label for="title"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
                                         <input type="text" name="title" id="title"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            placeholder="Type product name" required">
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500
+                                            @error('title')
+                                                border-red-600 focus:border-red-600 focus:ring-red-500
+                                            @enderror"
+                                            placeholder="Type product name" autofocus value="{{ old('title') }}">
+                                        @error('title')
+                                            <p class="mt-2 text-xs text-red-600 dark:text-red-400">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
                                     </div>
                                     <div>
                                         <label for="category_id"
@@ -34,19 +42,38 @@
                                             Category
                                         </label>
                                         <select id="category_id"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500
+                                            @error('title')
+                                                border-red-600 focus:border-red-600 focus:ring-red-500
+                                            @enderror"
                                             name="category_id">
                                             <option selected="">Select category</option>
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                <option value="{{ $category->id }}"
+                                                    {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                                    {{ $category->name }}
+                                                </option>
                                             @endforeach
                                         </select>
+                                        @error('category_id')
+                                            <p class="mt-2 text-xs text-red-600 dark:text-red-400">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
                                     </div>
                                     <div class="sm:col-span-2"><label for="body"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Body</label>
                                         <textarea id="body" rows="4"
-                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            placeholder="Write post body here" name="body"></textarea>
+                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500
+                                            @error('title')
+                                                    border-red-600 focus:border-red-600 focus:ring-red-500
+                                            @enderror"
+                                            placeholder="Write post body here" name="body" autofocus>{{ old('body') }}</textarea>
+                                        @error('body')
+                                            <p class="mt-2 text-xs text-red-600 dark:text-red-400">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="flex gap-4">
