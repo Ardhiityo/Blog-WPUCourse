@@ -71,17 +71,26 @@ class DashboardController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        //
+        $categories = Category::all();
+        return view('pages.dashboard.edit', compact('post', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string|max:25|min:3|unique:posts,title,' . $post->id,
+            'category_id' => 'required|exists:categories,id',
+            'body' => 'required|string|min:3',
+        ]);
+
+        $post->update($validated);
+
+        return redirect()->route('dashboard.index')->with('success', 'Post has been updated');
     }
 
     /**

@@ -21,8 +21,10 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('dashboard', DashboardController::class)->except(['show', 'delete']);
+    Route::resource('dashboard', DashboardController::class)->except(['show', 'delete', 'edit']);
     Route::get('/dashboard/posts/{post}', [DashboardController::class, 'show'])->name('dashboard.show');
+    Route::get('/dashboard/posts/{post}/edit', [DashboardController::class, 'edit'])->name('dashboard.edit');
+    Route::put('/dashboard/posts/{post}', [DashboardController::class, 'update'])->name('dashboard.update');
     Route::delete('/dashboard/posts/{post}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
 });
 

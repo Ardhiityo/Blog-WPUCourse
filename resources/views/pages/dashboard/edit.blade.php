@@ -15,11 +15,12 @@
                             <!-- Modal header -->
                             <div
                                 class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Add Product</h3>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Edit Product</h3>
                             </div>
                             <!-- Modal body -->
-                            <form action="{{ route('dashboard.store') }}" method="POST">
+                            <form action="{{ route('dashboard.update', ['post' => $post->id]) }}" method="POST">
                                 @csrf
+                                @method('PUT')
                                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
                                     <div>
                                         <label for="title"
@@ -29,7 +30,8 @@
                                             @error('title')
                                                 border-red-600 focus:border-red-600 focus:ring-red-500
                                             @enderror"
-                                            placeholder="Type product name" autofocus value="{{ old('title') }}">
+                                            placeholder="Type product name" autofocus
+                                            value="{{ old('title', $post->title) }}">
                                         @error('title')
                                             <p class="mt-2 text-xs text-red-600 dark:text-red-400">
                                                 {{ $message }}
@@ -50,7 +52,7 @@
                                             <option selected="">Select category</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}"
-                                                    {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                                    {{ old('category_id', $post->category->id) == $category->id ? 'selected' : '' }}>
                                                     {{ $category->name }}
                                                 </option>
                                             @endforeach
@@ -68,7 +70,7 @@
                                             @error('title')
                                                     border-red-600 focus:border-red-600 focus:ring-red-500
                                             @enderror"
-                                            placeholder="Write post body here" name="body" autofocus>{{ old('body') }}</textarea>
+                                            placeholder="Write post body here" name="body" autofocus>{{ old('body', $post->body) }}</textarea>
                                         @error('body')
                                             <p class="mt-2 text-xs text-red-600 dark:text-red-400">
                                                 {{ $message }}
@@ -85,7 +87,7 @@
                                                 d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                                 clip-rule="evenodd" />
                                         </svg>
-                                        Add new post
+                                        Update post
                                     </button>
                                     <a href="{{ route('dashboard.index') }}"
                                         class="text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
