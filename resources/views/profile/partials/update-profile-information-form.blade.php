@@ -92,18 +92,21 @@
     <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
     <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
     <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+
     <script>
         // Register the plugin
         FilePond.registerPlugin(FilePondPluginImagePreview);
         FilePond.registerPlugin(FilePondPluginFileValidateType);
         FilePond.registerPlugin(FilePondPluginFileValidateSize);
-
+        FilePond.registerPlugin(FilePondPluginImageResize);
+        FilePond.registerPlugin(FilePondPluginImageTransform);
         FilePond.create(document.querySelector('#avatar'), {
             acceptedFileTypes: ['image'],
             maxFileSize: '1MB',
+            allowImageResize: true,
             imageResizeTargetWidth: 100, // pixel
-            imageResizeTargetHeight: 100,
-            imageResizeMode: 'cover', // opsi: 'cover', 'contain', 'force'
+            imageResizeMode: 'contain', // opsi: 'cover', 'contain', 'force'
             imageResizeUpscale: false,
         });
 

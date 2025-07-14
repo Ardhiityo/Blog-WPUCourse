@@ -35,7 +35,7 @@ class ProfileController extends Controller
 
         if (isset($data['avatar'])) {
             if ($user->avatar) {
-                Storage::disk('public')->delete($user);
+                Storage::disk('public')->delete($user->avatar);
             }
             $avatar = Str::after($data['avatar'], 'tmp/');
             Storage::disk('public')->move($data['avatar'], "avatar/$avatar");
