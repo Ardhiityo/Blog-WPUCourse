@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -29,22 +31,33 @@ class ProfileController extends Controller
     {
         $data = $request->validated();
 
+        $user = $request->user();
+
         if (isset($data['avatar'])) {
-            if ($request->user()->avatar) {
-                Storage::disk('public')->delete($request->user()->avatar);
+            if ($user->avatar) {
+                Storage::disk('public')->delete($user);
             }
-            $data['avatar'] = $data['avatar']->store('avatar', 'public');
+            $avatar = Str::after($data['avatar'], 'tmp/');
+            Storage::disk('public')->move($data['avatar'], "avatar/$avatar");
+            $data['avatar'] = "avatar/$avatar";
         }
 
-        $request->user()->fill($data);
+        $user->fill($data);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    public function avatar(Request $request)
+    {
+        if ($request->hasFile('avatar')) {
+            return $request->file('avatar')->store('tmp', 'public');
+        }
     }
 
     /**
