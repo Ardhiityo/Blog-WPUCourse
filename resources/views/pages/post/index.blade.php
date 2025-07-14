@@ -53,9 +53,20 @@
                     <a href="{{ route('posts.index', ['username' => $post->user->username]) }}"
                         class="text-slate-900 hover:underline text-sm">
                         <div class="flex items-center space-x-4">
-                            <img class="w-7 h-7 rounded-full"
-                                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
-                                alt="Jese Leos avatar" />
+                            <div class="w-7 h-7 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                                @if ($post->user->avatar ?? false)
+                                    <img class="w-7 h-7 rounded-full"
+                                        src="{{ asset(Storage::url($post->user->avatar)) }}"
+                                        alt="{{ $post->user->name }}" />
+                                @else
+                                    <svg class="text-center text-gray-400 -left-1" fill="currentColor"
+                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
+                                        </path>
+                                    </svg>
+                                @endif
+                            </div>
                             <span class="font-medium dark:text-white">
                                 {{ $post->user->name }}
                             </span>

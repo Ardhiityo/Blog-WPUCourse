@@ -36,9 +36,22 @@
                                     id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                     <span class="absolute -inset-1.5"></span>
                                     <span class="sr-only">Open user menu</span>
-                                    <img class="size-8 rounded-full"
-                                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                        alt="" />
+                                    @if (Auth::user()->avatar ?? false)
+                                        <img class="w-10 h-10 rounded-full inline"
+                                            src="{{ asset(Storage::url(Auth::user()->avatar)) }}"
+                                            alt="{{ Auth::user()->name }}" />
+                                    @else
+                                        <div
+                                            class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                                            <svg class="absolute inline w-12 h-12 text-gray-400 -left-1" fill="currentColor"
+                                                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                    clip-rule="evenodd">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                    @endif
                                     <span class="ml-2 text-gray-300">{{ Auth::user()->name }}</span>
                                     <div class="ms-1 text-gray-300">
                                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -126,9 +139,19 @@
             @auth
                 <div class="flex items-center px-5">
                     <div class="shrink-0">
-                        <img class="size-10 rounded-full"
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt="" />
+                        @if (Auth::user()->avatar ?? false)
+                            <img class="w-10 h-10 rounded-full inline"
+                                src="{{ asset(Storage::url(Auth::user()->avatar)) }}" alt="{{ Auth::user()->name }}" />
+                        @else
+                            <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                                <svg class="absolute inline w-12 h-12 text-gray-400 -left-1" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                        clip-rule="evenodd">
+                                    </path>
+                                </svg>
+                            </div>
+                        @endif
                     </div>
                     <div class="ml-3">
                         <div class="text-base/5 font-medium text-white">{{ Auth::user()->username }}</div>

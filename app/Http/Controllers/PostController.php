@@ -14,7 +14,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = Post::with(['user:id,name,username', 'category:id,name,slug'])
+        $posts = Post::with(['user:id,name,username,avatar', 'category:id,name,slug'])
             ->filter(
                 [
                     'title' => $request->query('title') ?? false,
