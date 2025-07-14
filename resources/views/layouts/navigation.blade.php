@@ -23,21 +23,9 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <div class="flex items-center gap-2">
-                            @if (Auth::user()->avatar ?? false)
-                                <img class="w-10 h-10 rounded-full inline"
-                                    src="{{ asset(Storage::url(Auth::user()->avatar)) }}"
-                                    alt="{{ Auth::user()->name }}" />
-                            @else
-                                <div
-                                    class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                                    <svg class="absolute inline w-12 h-12 text-gray-400 -left-1" fill="currentColor"
-                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
-                                        </path>
-                                    </svg>
-                                </div>
-                            @endif
+                            <img class="w-10 h-10 rounded-full inline"
+                                src="{{ asset(Auth::user()->avatar ? 'storage/' . Auth::user()->avatar : 'avatar.png') }}"
+                                alt="{{ Auth::user()->name }}" />
                             <button
                                 class="inline-flex items-center px-1 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-hidden transition ease-in-out duration-150">
                                 <div>{{ Auth::user()->name }}</div>
@@ -99,25 +87,14 @@
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4 flex gap-2 items-center">
-                @if (Auth::user()->avatar ?? false)
-                    <img class="w-10 h-10 rounded-full inline" src="{{ asset(Storage::url(Auth::user()->avatar)) }}"
-                        alt="{{ Auth::user()->name }}" />
-                @else
-                    <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                        <svg class="absolute inline w-12 h-12 text-gray-400 -left-1" fill="currentColor"
-                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                clip-rule="evenodd">
-                            </path>
-                        </svg>
-                    </div>
-                @endif
+                <img class="w-10 h-10 rounded-full inline"
+                    src="{{ asset(Auth::user()->avatar ? 'storage/' . Auth::user()->avatar : 'avatar.png') }}"
+                    alt="{{ Auth::user()->name }}" />
                 <div>
                     <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
             </div>
-
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
