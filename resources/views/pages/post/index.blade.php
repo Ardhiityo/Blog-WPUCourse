@@ -46,9 +46,9 @@
                         {{ Str::limit($post->title, 50, '...') }}
                     </a>
                 </h2>
-                <p class="mb-5 font-light text-gray-500 dark:text-gray-400">
-                    {{ Str::limit($post->body, 100, '...') }}
-                </p>
+                <div class="mb-5 font-light text-gray-500 dark:text-gray-400">
+                    {!! Str::limit($post->body, 100, '...') !!}
+                </div>
                 <div class="flex justify-between items-center">
                     <a href="{{ route('posts.index', ['username' => $post->user->username]) }}"
                         class="text-slate-900 hover:underline text-sm">

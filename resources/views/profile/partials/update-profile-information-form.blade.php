@@ -84,6 +84,7 @@
         @endif
     </div>
 </form>
+
 </section>
 
 @push('scripts')

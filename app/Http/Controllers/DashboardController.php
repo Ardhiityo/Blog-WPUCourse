@@ -46,7 +46,7 @@ class DashboardController extends Controller
         $request->validate([
             'title' => 'required|string|max:25|min:3',
             'category_id' => 'required|exists:categories,id',
-            'body' => 'required|string|min:3',
+            'body' => 'required|string|min:50',
         ]);
 
         Post::create([

@@ -1,4 +1,8 @@
 <x-app-layout>
+    @push('styles')
+        <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    @endpush
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
@@ -15,13 +19,14 @@
                             <!-- Modal header -->
                             <div
                                 class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Edit Product</h3>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Edit Post</h3>
                             </div>
                             <!-- Modal body -->
-                            <form action="{{ route('dashboard.update', ['post' => $post->id]) }}" method="POST">
+                            <form action="{{ route('dashboard.update', ['post' => $post->id]) }}" method="POST"
+                                id="form">
                                 @csrf
                                 @method('PUT')
-                                <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                                <div class="grid gap-4 mb-[150px] sm:grid-cols-2">
                                     <div>
                                         <label for="title"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
@@ -52,7 +57,7 @@
                                             <option selected="">Select category</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}"
-                                                    {{ old('category_id', $post->category->id) == $category->id ? 'selected' : '' }}>
+                                                    {{ old('category_id', $post->category_id) == $category->id ? 'selected' : '' }}>
                                                     {{ $category->name }}
                                                 </option>
                                             @endforeach
@@ -63,14 +68,13 @@
                                             </p>
                                         @enderror
                                     </div>
-                                    <div class="sm:col-span-2"><label for="body"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Body</label>
-                                        <textarea id="body" rows="4"
-                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500
-                                            @error('title')
-                                                    border-red-600 focus:border-red-600 focus:ring-red-500
-                                            @enderror"
-                                            placeholder="Write post body here" name="body" autofocus>{{ old('body', $post->body) }}</textarea>
+                                    <div class="sm:col-span-2">
+                                        <label for="body"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            Body
+                                        </label>
+                                        <textarea id="body" rows="4" class="hidden" name="body" autofocus></textarea>
+                                        <div id="editor">{!! old('body', $post->body) !!}</div>
                                         @error('body')
                                             <p class="mt-2 text-xs text-red-600 dark:text-red-400">
                                                 {{ $message }}
@@ -80,7 +84,7 @@
                                 </div>
                                 <div class="flex gap-4">
                                     <button type="submit"
-                                        class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                        class="text-white cursor-pointer inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                         <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewbox="0 0 20 20"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd"
@@ -90,7 +94,7 @@
                                         Update post
                                     </button>
                                     <a href="{{ route('dashboard.index') }}"
-                                        class="text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                        class="text-white inline-flex cursor-pointer items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                                         Cancel
                                     </a>
                                 </div>
@@ -101,4 +105,24 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+        <script>
+            const quill = new Quill('#editor', {
+                theme: 'snow'
+            });
+
+            const body = document.getElementById('body');
+            const editor = document.getElementById('editor');
+            const form = document.getElementById('form');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const content = editor.children[0].innerHTML;
+                body.value = content;
+                form.submit();
+            });
+        </script>
+    @endpush
 </x-app-layout>
