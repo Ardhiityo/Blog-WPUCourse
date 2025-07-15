@@ -8,19 +8,9 @@
                         Blogs</a>
                     <address class="flex items-center my-6 not-italic">
                         <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                            @if ($post->user->avatar ?? false)
-                                <img class="mr-4 w-16 h-16 rounded-full"
-                                    src="{{ asset(Storage::url($post->user->avatar)) }}" alt="Jese Leos">
-                            @else
-                                <div class="w-16 h-16 overflow-hidden mr-4 bg-gray-100 rounded-full dark:bg-gray-600">
-                                    <svg class="text-center text-gray-400 w-16 h-16" fill="currentColor"
-                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
-                                        </path>
-                                    </svg>
-                                </div>
-                            @endif
+                            <img class="mr-4 w-16 h-16 rounded-full"
+                                src="{{ asset($post->user->avatar ? 'storage/' . $post->user->avatar : 'avatar.png') }}"
+                                alt="{{ $post->user->name }}">
                             <div>
                                 <a href="{{ route('posts.index', ['username' => $post->user->username]) }}"
                                     rel="author"
